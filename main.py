@@ -1,23 +1,14 @@
 #!/usr/bin/python3
-import requests
+import string
+import re
+import command
 
-def read_command():
+def read_sentence():
     print("@ ", end="")
-    return input()
+    return [re.sub(r'\W+', '', i).lower() for i in input().strip().split(" ")]
 
-def weather(command):
-    if "C" in command or "Celsius" in command:
-        print(requests.get('https://wttr.in/?m').text)
-    elif "F" in command or "Fahrenheit" in command:
-        print(requests.get('https://wttr.in/?u').text)
-    else:
-        print(requests.get('https://wttr.in/?m').text) # ha metric for the win
-
-command = read_command();
-while (not command == "exit"):
-    command = command.strip().split(" ")
-    if "weather" in command:
-        weather(command)
-    else:
-        print(command)
-    command = read_command();
+sentence = read_sentence()
+while not 'exit' in sentence:
+    pertaining_commands = [i for i in command.available_commands if i.pertains(sentence)]
+    len(pertaining_commands) > 0 and pertaining_commands[0].run(sentence) # Make this more sophisticated
+    sentence = read_sentence();
