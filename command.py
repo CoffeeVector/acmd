@@ -1,16 +1,6 @@
-from abc import ABC, abstractmethod
 import requests
 
-class Command:
-    @abstractmethod
-    def pertains(self, command):
-        pass
-
-    @abstractmethod
-    def run(self, command):
-        pass
-
-class WeatherCommand(Command):
+class WeatherCommand:
     def pertains(self, command):
         return 'weather' in command
 
