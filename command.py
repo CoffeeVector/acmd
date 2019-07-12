@@ -42,8 +42,8 @@ class GoogleCommand:
     def pertains(self, command, raw_command):
         return 'google' in command
 
-    def run(self, command, raw_command):
-        index_of_google = command.index('google')
+    def run(self, command, raw_command): 
+        index_of_google = command.index('google') 
         search_query_list = [i for j, i in zip(range(0, len(raw_command)), raw_command) if j > index_of_google]
         search_query = ""
         for i in search_query_list:
