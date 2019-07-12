@@ -12,4 +12,19 @@ class WeatherCommand:
         else:
             print(requests.get('https://wttr.in/?m&0').text) # ha metric for the win
 
-available_commands = [WeatherCommand()]
+import os
+import re
+class MathCommand:
+    def pertains(self, command):
+        return 'calculate' in command
+    
+    def run(self, command):
+        printed = False
+        for i in command:
+            if not re.search('[a-zA-Z]', i):
+                printed = True
+                print(os.popen('echo ' + i + ' | bc -l').read())
+        if not printed:
+            print("I don't know what to calculate...")
+
+available_commands = [WeatherCommand(), MathCommand()]
