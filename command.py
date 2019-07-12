@@ -5,6 +5,9 @@ class WeatherCommand:
         return 'weather' in command
 
     def run(self, command):
+        if os.popen('command -v curl') == "":
+            print("Sorry, I don't know how to get stuff on the internet. (install curl on your unix system)")
+            return
         if "c" in command or "celsius" in command:
             print(requests.get('https://wttr.in/?m&0').text)
         elif "f" in command or "fahrenheit" in command:
@@ -19,6 +22,9 @@ class MathCommand:
         return 'calculate' in command
     
     def run(self, command):
+        if os.popen('command -v bc') == "":
+            print("Sorry, I'm to stupid to do math (install bc on your unix system).")
+            return
         printed = False
         for i in command:
             if not re.search('[a-zA-Z]', i):
