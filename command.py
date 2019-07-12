@@ -38,21 +38,22 @@ import subprocess
 import sys
 
 from lxml import html
-class GoogleCommand:
-    def pertains(self, command, raw_command):
-        return 'google' in command
-
-    def run(self, command, raw_command): 
-        index_of_google = command.index('google') 
-        search_query_list = [i for j, i in zip(range(0, len(raw_command)), raw_command) if j > index_of_google]
-        search_query = ""
-        for i in search_query_list:
-            search_query = search_query + i + " "
-        url = "https://www.google.com/search?q=" + urllib.parse.quote(search_query, safe='~()*!.\'')
-        r = requests.get(url)
-        page = html.fromstring(r.text)
-        test = r.text
-        links = ["https://google.com/" + link for link in page.xpath('//div[contains(@class, "jfp3ef")]/a/@href')]
-        subprocess.run(['google-chrome', '--new-window'] + links[:5])
-
-available_commands = [WeatherCommand(), MathCommand(), GoogleCommand()]
+#class GoogleCommand:
+#    def pertains(self, command, raw_command):
+#        return 'google' in command
+#
+#    def run(self, command, raw_command): 
+#        index_of_google = command.index('google') 
+#        search_query_list = [i for j, i in zip(range(0, len(raw_command)), raw_command) if j > index_of_google]
+#        search_query = ""
+#        for i in search_query_list:
+#            search_query = search_query + i + " "
+#        url = "https://www.google.com/search?q=" + urllib.parse.quote(search_query, safe='~()*!.\'')
+#        r = requests.get(url)
+#        page = html.fromstring(r.text)
+#        test = r.text
+#        links = ["https://google.com/" + link for link in page.xpath('//div[contains(@class, "jfp3ef")]/a/@href')]
+#        subprocess.run(['google-chrome', '--new-window'] + links[:5])
+#
+#available_commands = [WeatherCommand(), MathCommand(), GoogleCommand()]
+available_commands = [WeatherCommand(), MathCommand()]
