@@ -40,10 +40,18 @@ import sys
 from lxml import html
 class GoogleCommand:
     def pertains(self, command, raw_command, spell_command):
-        return 'google' in command or 'google' in spell_command
+        return 'google' in command or 'google' in spell_command or 'search' in command or 'search' in spell_command
 
     def run(self, command, raw_command, spell_command): 
-        index_of_google = command.index('google') 
+        try:
+            index_of_google = command.index('google') 
+        except:
+            index_of_google = len(command)
+        try:
+            index_of_search = command.index('search') 
+        except:
+            index_of_search = len(command)
+        index_of_google = index_of_google if (index_of_google < index_of_search) else index_of_search
         search_query_list = [i for j, i in zip(range(0, len(raw_command)), raw_command) if j > index_of_google]
         search_query = ""
         for i in search_query_list:
@@ -53,7 +61,7 @@ class GoogleCommand:
         page = html.fromstring(r.text)
         test = r.text
         links = ["https://google.com/" + link for link in page.xpath('//div[contains(@class, "jfp3ef")]/a/@href')]
+        links = [url] + links
         subprocess.run(['google-chrome', '--new-window'] + links[:5])
 
 available_commands = [WeatherCommand(), MathCommand(), GoogleCommand()]
-available_commands = [WeatherCommand(), MathCommand()]
