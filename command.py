@@ -1,16 +1,16 @@
 import requests
 
 class WeatherCommand:
-    def pertains(self, command, raw_command):
-        return 'weather' in command
+    def pertains(self, command, raw_command, spell_command):
+        return 'weather' in command or 'weather' in spell_command
 
-    def run(self, command, raw_command):
+    def run(self, command, raw_command, spell_command):
         if os.popen('command -v curl') == "":
             print("Sorry, I don't know how to get stuff on the internet. (install curl on your unix system)")
             return
-        if "c" in command or "celsius" in command:
+        if "c" in command or "celsius" in command or 'c' in spell_command or 'celsius' in spell_command:
             print(requests.get('https://wttr.in/?m&0').text)
-        elif "f" in command or "fahrenheit" in command:
+        elif "f" in command or "fahrenheit" in command or "f" in spell_command or "fahrenheit" in spell_command:
             print(requests.get('https://wttr.in/?u&0').text)
         else:
             print(requests.get('https://wttr.in/?m&0').text) # ha metric for the win
@@ -18,10 +18,10 @@ class WeatherCommand:
 import os
 import re
 class MathCommand:
-    def pertains(self, command, raw_command):
-        return 'calculate' in command
+    def pertains(self, command, raw_command, spell_command):
+        return 'calculate' in command or 'calculate' in spell_command
     
-    def run(self, command, raw_command):
+    def run(self, command, raw_command, spell_command):
         if os.popen('command -v bc') == "":
             print("Sorry, I'm to stupid to do math (install bc on your unix system).")
             return
