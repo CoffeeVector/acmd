@@ -61,7 +61,7 @@ class GoogleCommand:
         page = html.fromstring(r.text)
         test = r.text
         links = ["https://google.com/" + link for link in page.xpath('//div[contains(@class, "jfp3ef")]/a/@href')]
-        links = [url] + links
+        links = links + [url]
         subprocess.run(['google-chrome', '--new-window'] + links[:5])
 
 available_commands = [WeatherCommand(), MathCommand(), GoogleCommand()]
