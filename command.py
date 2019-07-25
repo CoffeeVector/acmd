@@ -1,5 +1,4 @@
-import requests
-
+import requests 
 class WeatherCommand:
     def pertains(self, command, raw_command, spell_command):
         return 'weather' in command or 'weather' in spell_command
@@ -23,7 +22,7 @@ class MathCommand:
     
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v bc') == "":
-            print("Sorry, I'm to stupid to do math (install bc on your unix system).")
+            print("Sorry, I'm too stupid to do math (install bc on your unix system).")
             return
         printed = False
         for i in raw_command:
@@ -40,7 +39,8 @@ import sys
 from lxml import html
 class GoogleCommand:
     def pertains(self, command, raw_command, spell_command):
-        return 'google' in command or 'google' in spell_command or 'search' in command or 'search' in spell_command
+        keywords = ['google', 'search']
+        return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
 
     def run(self, command, raw_command, spell_command): 
         try:
@@ -63,5 +63,16 @@ class GoogleCommand:
         links = ["https://google.com/" + link for link in page.xpath('//div[contains(@class, "jfp3ef")]/a/@href')]
         links = links + [url]
         subprocess.run(['google-chrome', '--new-window'] + links[:5])
+class TodoCommand:
+    def pertains(self, command, raw_command, spell_command):
+        keywords = ['todo', 'work']
+        return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
+    
+    def run(self, command, raw_command, spell_command):
+        if os.popen('command -v shuf').read() == "":
+            print("Sorry, I'm too stupid to do random things (install shuf on your unix system).")
+        filename = os.popen('ls ~/.todo | shuf | head -n 1').read()
+        print(filename)
+        os.popen('st -e vim ~/.todo/' + filename)
 
-available_commands = [WeatherCommand(), MathCommand(), GoogleCommand()]
+available_commands = [WeatherCommand(), MathCommand(), GoogleCommand(), TodoCommand()]
