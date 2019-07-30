@@ -57,7 +57,7 @@ class GoogleCommand:
         return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
 
     def confidence(self, command, raw_command, spell_command):
-        return float(min(5, command.count('google') + command.count('search')))/5
+        return 1.0
 
     def run(self, command, raw_command, spell_command): 
         try:
