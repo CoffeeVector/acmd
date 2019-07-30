@@ -63,6 +63,7 @@ class GoogleCommand:
         links = ["https://google.com/" + link for link in page.xpath('//div[contains(@class, "jfp3ef")]/a/@href')]
         links = links + [url]
         subprocess.run(['google-chrome', '--new-window'] + links[:5])
+
 class TodoCommand:
     def pertains(self, command, raw_command, spell_command):
         keywords = ['todo', 'work']
