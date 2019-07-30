@@ -81,7 +81,6 @@ class GoogleCommand:
         links = links + [url]
         subprocess.run(['google-chrome', '--new-window'] + links[:5])
 
-
 class TodoCommand:
     def pertains(self, command, raw_command, spell_command):
         keywords = ['todo', 'work']
