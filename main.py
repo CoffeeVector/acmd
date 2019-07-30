@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!python3
 import string
 import re
 import command
