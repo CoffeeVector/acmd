@@ -6,7 +6,7 @@ class WeatherCommand:
         return 'weather' in command or 'weather' in spell_command
 
     def confidence(self, command, raw_command, spell_command): 
-        return float(max(5, command.count('weather')))/5
+        return float(min(5, command.count('weather')))/5
 
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v curl') == "":
@@ -29,7 +29,8 @@ class MathCommand:
         return 'calculate' in command or 'calculate' in spell_command
 
     def confidence(self, command, raw_command, spell_command):
-        return float(max(5, command.count('calculate')))/5
+        print(command)
+        return float(min(5, command.count('calculate')))/5
     
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v bc') == "":
@@ -56,7 +57,7 @@ class GoogleCommand:
         return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
 
     def confidence(self, command, raw_command, spell_command):
-        return float(max(5, command.count('google') + command.count('search')))/5
+        return float(min(5, command.count('google') + command.count('search')))/5
 
     def run(self, command, raw_command, spell_command): 
         try:
@@ -87,7 +88,7 @@ class TodoCommand:
         return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
 
     def confidence(self, command, raw_command, spell_command):
-        return float(max(5, command.count('todo') + command.count('work')))/5
+        return float(min(5, command.count('todo') + command.count('work')))/5
     
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v shuf').read() == "":
@@ -106,7 +107,7 @@ class ApodCommand:
         return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])\
 
     def confidence(self, command, raw_command, spell_command):
-        return float(max(5, command.count('apod') + command.count('astronomy')))/5
+        return float(min(5, command.count('apod') + command.count('astronomy')))/5
 
     def run(self, command, raw_command, spell_command):
         url = requests.get("https://api.nasa.gov/planetary/apod?date=2018-08-04&hd=True&api_key=DEMO_KEY").json()["hdurl"]

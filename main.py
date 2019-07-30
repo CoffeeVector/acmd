@@ -19,11 +19,12 @@ def read_sentence():
 def sort_confidence(sentence, raw_command, spell_command):
     def sort_confidence(val):
         return val.confidence(sentence, raw_command, spell_command)
-
+    return sort_confidence
 
 sentence, raw_command, spell_command = read_sentence()
 while not 'exit' in sentence:
     pertaining_commands = [i for i in command.available_commands if i.pertains(sentence, raw_command, spell_command)]
+    pertaining_commands.sort(key = sort_confidence(sentence, raw_command, spell_command), reverse = True)
     len(pertaining_commands) > 0 and pertaining_commands[0].run(sentence, raw_command,
                                                                 spell_command)  # Make this more sophisticated
     sentence, raw_command, spell_command = read_sentence();
