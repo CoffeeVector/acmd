@@ -5,7 +5,7 @@ class WeatherCommand:
     def pertains(self, command, raw_command, spell_command):
         return 'weather' in command or 'weather' in spell_command
 
-    def confidence(self, command, raw_command, spell_command): 
+    def confidence(self, command, raw_command, spell_command):
         return float(min(5, command.count('weather')))/5
 
     def run(self, command, raw_command, spell_command):
@@ -31,7 +31,7 @@ class MathCommand:
     def confidence(self, command, raw_command, spell_command):
         print(command)
         return float(min(5, command.count('calculate')))/5
-    
+
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v bc') == "":
             print("Sorry, I'm too stupid to do math (install bc on your unix system).")
@@ -59,7 +59,7 @@ class GoogleCommand:
     def confidence(self, command, raw_command, spell_command):
         return 1.0
 
-    def run(self, command, raw_command, spell_command): 
+    def run(self, command, raw_command, spell_command):
         try:
             index_of_google = command.index('google')
         except:
@@ -89,7 +89,7 @@ class TodoCommand:
 
     def confidence(self, command, raw_command, spell_command):
         return float(min(5, command.count('todo') + command.count('work')))/5
-    
+
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v shuf').read() == "":
             print("Sorry, I'm too stupid to do random things (install shuf on your unix system).")
