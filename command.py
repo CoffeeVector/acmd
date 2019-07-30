@@ -3,6 +3,9 @@ class WeatherCommand:
     def pertains(self, command, raw_command, spell_command):
         return 'weather' in command or 'weather' in spell_command
 
+    def confidence(self, command, raw_command, spell_command): 
+        return float(max(5, command.count('weather')))/5
+
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v curl') == "":
             print("Sorry, I don't know how to get stuff on the internet. (install curl on your unix system)")
@@ -19,6 +22,9 @@ import re
 class MathCommand:
     def pertains(self, command, raw_command, spell_command):
         return 'calculate' in command or 'calculate' in spell_command
+
+    def confidence(self, command, raw_command, spell_command):
+        return float(max(5, command.count('calculate')))/5
     
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v bc') == "":
@@ -41,6 +47,9 @@ class GoogleCommand:
     def pertains(self, command, raw_command, spell_command):
         keywords = ['google', 'search']
         return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
+
+    def confidence(self, command, raw_command, spell_command):
+        return float(max(5, command.count('google') + command.count('search')))/5
 
     def run(self, command, raw_command, spell_command): 
         try:
@@ -68,6 +77,9 @@ class TodoCommand:
     def pertains(self, command, raw_command, spell_command):
         keywords = ['todo', 'work']
         return any([i in command for i in keywords]) or any([i in spell_command for i in keywords])
+
+    def confidence(self, command, raw_command, spell_command):
+        return float(max(5, command.count('todo') + command.count('work')))/5
     
     def run(self, command, raw_command, spell_command):
         if os.popen('command -v shuf').read() == "":

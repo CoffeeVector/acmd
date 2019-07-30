@@ -14,6 +14,11 @@ def read_sentence():
         spell_command.extend(spell.candidates(i))
     return (command, raw_command, spell_command)
 
+def sort_confidence(sentence, raw_command, spell_command):
+    def sort_confidence(val):
+        return val.confidence(sentence, raw_command, spell_command)
+
+
 sentence, raw_command, spell_command = read_sentence()
 while not 'exit' in sentence:
     pertaining_commands = [i for i in command.available_commands if i.pertains(sentence, raw_command, spell_command)]
