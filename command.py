@@ -99,6 +99,8 @@ class TodoCommand:
 from imageDisplayer import show_image
 from io import BytesIO
 from PIL import Image
+from tqdm import tqdm
+import math
 
 class ApodCommand:
     def pertains(self, command, raw_command, spell_command):
@@ -110,8 +112,17 @@ class ApodCommand:
 
     def run(self, command, raw_command, spell_command):
         url = requests.get("https://api.nasa.gov/planetary/apod?date=2018-08-04&hd=True&api_key=DEMO_KEY").json()["hdurl"]
-        response = requests.get(url)
-        img = Image.open(BytesIO(response.content))
+        response = requests.get(url, stream = True)
+        total_size = int(response.headers.get('content-length', 0)); 
+        block_size = 1024
+        content = b''
+        with response as r:
+            for data in tqdm(r.iter_content(block_size), total=math.ceil(total_size//block_size) , unit='KB', unit_scale=True):
+                content = content + data
+        if total_size != 0 and len(content) != total_size:
+            print("ERROR, something went wrong")  
+
+        img = Image.open(BytesIO(content))
 
         # show_image is a command that shows a image in the terminal given a PIL Image object
         show_image(img)
