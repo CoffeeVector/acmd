@@ -108,7 +108,7 @@ class ApodCommand:
         return float(min(5, command.count('apod') + command.count('astronomy')))/5
 
     def run(self, command, raw_command, spell_command):
-        url = requests.get("https://api.nasa.gov/planetary/apod?date=2018-08-04&hd=True&api_key=DEMO_KEY").json()["hdurl"]
+        url = requests.get("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY").json()["hdurl"]
         response = requests.get(url, stream = True)
         total_size = int(response.headers.get('content-length', 0)); 
         block_size = 1024
