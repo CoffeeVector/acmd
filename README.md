@@ -11,3 +11,7 @@ Yes.
 
 ## Why am I doing this?
 I don't know, cause it might be cool?
+
+# Contribute
+
+Run `git config core.hooksPath hooks`. This will replace your git hooks to the hooks folder (if you have extra personal hooks, you can put them there and then gitignore them)
