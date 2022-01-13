@@ -3,7 +3,7 @@ chardet==3.0.4
 idna==2.8
 lxml==4.4.0
 numpy==1.17.0
-Pillow==6.1.0
+Pillow==9.0.0
 pyspellchecker==0.5.0
 requests==2.22.0
 tqdm==4.32.2
